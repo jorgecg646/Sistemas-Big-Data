@@ -1,4 +1,4 @@
-### README: Extracción y filtrado de datos del INE en DataFrame
+### Extracción y filtrado de datos del INE en DataFrame
 Este script de Python permite obtener datos desde la API del Instituto Nacional de Estadística (INE) de España y filtrarlos fácilmente según las columnas indicadas, facilitando el análisis posterior en pandas.
 
 ### Descripción
@@ -25,7 +25,7 @@ El archivo contiene la función obtener_datos, diseñada para acceder a distinto
    
  - Ejecutas: **pip install pandas requests mysql numpy**
 
-  > 💡 **Otra Opción:** Tienes que tener instalado "uv": uv add pandas requests mysql numpy
+  > 💡 **Otra Opción:** (Tienes que tener instalado "uv") uv add pandas requests mysql numpy
    
 **De esta forma lo instalas en Python global**, si no quieres de esta manera puedes usar un entorno virtual y instalarlas ahí.
 
