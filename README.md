@@ -1,6 +1,8 @@
-Extracción y filtrado de datos del INE en DataFrame
-Descripción
+README: Extracción y filtrado de datos del INE en DataFrame
 Este script de Python permite obtener datos desde la API del Instituto Nacional de Estadística (INE) de España y filtrarlos fácilmente según las columnas indicadas, facilitando el análisis posterior en pandas.
+
+Descripción
+El archivo contiene la función obtener_datos, diseñada para acceder a distintos endpoints de la API del INE y devolver los datos en un DataFrame de pandas, ya filtrados por las columnas que el usuario especifique. La función soporta tanto endpoints del tipo DATOS_TABLA (listas de series) como DATOS_SERIE (serie individual con sus datos).
 
 Requisitos
 Antes de ejecutar el script, asegúrate de tener instaladas las siguientes dependencias:
@@ -13,20 +15,21 @@ requests
 
 Puedes instalar las dependencias necesarias con:
 
-
+bash
 pip install pandas requests
 Uso
 El uso principal se realiza mediante la función:
 
-
+python
 obtener_datos(columnas=None, URL_API="URL_DEL_ENDPOINT")
-Parámetro	Descripción
-columnas	Lista opcional con los nombres de las columnas que se desea obtener.
-URL_API	URL del endpoint de la API del INE que quieres consultar.
- Ejemplos
-Consulta distintos tipos de datos del INE y filtra solo las columnas importantes:
+columnas: Lista opcional con los nombres de las columnas que se desea obtener. Si es None, devuelve todas las columnas.
 
+URL_API: URL del endpoint de la API del INE que quieres consultar.
 
+Ejemplos
+Consulta distintos tipos de datos del INE y filtra solo las columnas importantes ([Nombre, Anyo, Valor]):
+
+python
 URL1 = "https://servicios.ine.es/wstempus/jsCache/ES/DATOS_TABLA/25171"
 print(obtener_datos(columnas=["Nombre", "Anyo", "Valor"], URL_API=URL1).head())
 
