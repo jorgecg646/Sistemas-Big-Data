@@ -25,11 +25,7 @@ El archivo contiene la función obtener_datos, diseñada para acceder a distinto
    
  - Ejecutas: **pip install pandas requests mysql numpy**
 
-  > **Tip:** Esto es más rápido pero tienes que tener instalado "uv": uv add pandas requests mysql numpy
-> 
-:::tip
- Esto es más rápido pero tienes que tener instalado "uv": uv add pandas requests mysql numpy
-:::
+  > 💡 **Otra Opción:** Tienes que tener instalado "uv": uv add pandas requests mysql numpy
    
 **De esta forma lo instalas en Python global**, si no quieres de esta manera puedes usar un entorno virtual y instalarlas ahí.
 
@@ -38,19 +34,18 @@ El archivo contiene la función obtener_datos, diseñada para acceder a distinto
  - Ejecutas (como recomendación hacerlo con uv es mas rápido): uv venv
    
  - Ejecutas: .venv\Script\activate
-   
- - Algunas veces no viene con pip si ese es el caso usa ejecuta esto: python -m ensurepip
+
+ > ⚠️ **Peligro:** Algunas veces no viene con pip instalado, si ese es el caso usa ejecuta esto: python -m ensurepip
    
  - Ejecutas: python -m pip install pandas requests mysql numpy
    
 ### Uso
 El uso principal se realiza mediante la función:
 
-python
-obtener_datos(columnas=None, URL_API="URL_DEL_ENDPOINT")
-columnas: Lista opcional con los nombres de las columnas que se desea obtener. Si es None, devuelve todas las columnas.
+**obtener_datos(columnas=None, URL_API="URL_DEL_ENDPOINT")**
+ - *__columnas__*: Lista opcional con los nombres de las columnas que se desea obtener. Si es None, devuelve todas las columnas.
 
-URL_API: URL del endpoint de la API del INE que quieres consultar.
+ - *__URL_API__*: URL del endpoint de la API del INE que quieres consultar.
 
 Ejemplos
 Consulta distintos tipos de datos del INE y filtra solo las columnas importantes ([Nombre, Anyo, Valor]):
@@ -72,7 +67,8 @@ Añade metainformación de la serie en el DataFrame, como "Nombre", si está dis
 
 Permite seleccionar únicamente las columnas relevantes, facilitando análisis y visualización.
 
-### Notas adicionales
+:::note
 La función asume que las URLs proporcionadas devuelven una respuesta JSON en el formato esperado por la API.
 
 Si alguna de las columnas solicitadas no existe en los datos, simplemente se omite.
+:::
