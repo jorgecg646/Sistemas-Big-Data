@@ -25,7 +25,7 @@ El archivo contiene la función obtener_datos, diseñada para acceder a distinto
    
  - Ejecutas: **pip install pandas requests mysql numpy**
 
-  > **Otra opción es:** uv add pandas requests mysql numpy
+  > **Tip:** Esto es más rápido pero tienes que tener instalado "uv": uv add pandas requests mysql numpy 
    
 **De esta forma lo instalas en Python global**, si no quieres de esta manera puedes usar un entorno virtual y instalarlas ahí.
 
