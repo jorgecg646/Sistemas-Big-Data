@@ -53,4 +53,5 @@ Para cumplir con el objetivo de trabajo colaborativo, se seguirá un flujo de tr
 1. No hacer `commit` directamente a la rama `main` (o `master`).
 2. Crear **ramas** (`feature/`, `fix/`) para cada nueva funcionalidad o script (ej. `feature/api-openweather`).
 3. Realizar **Pull Requests (PRs)** para integrar los cambios en `main`.
-
+4. No subir fallos
+5. Subir aciertos
