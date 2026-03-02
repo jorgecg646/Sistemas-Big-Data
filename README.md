@@ -121,4 +121,54 @@ python proyecto1.7/main_analysis.py
 - **plotly** → Visualizaciones interactivas
 - **pyarrow** → Conversión entre Polars y Pandas
 
+## 📊 Tableau — Explotación de Datos
+
+### Fuentes de datos
+| Fuente | Tipo | Descripción |
+|---|---|---|
+| `ipc_clean.csv` | CSV (Polars) | Variación anual IPC nacional mensual (2017–2025) |
+| `ipv_clean.csv` | CSV (Polars) | Índice de Precios de Vivienda por CCAA trimestral (2007–2024) |
+| Base de datos | MySQL/SQLite | Tablas originales del INE |
+
+Fuentes relacionadas por el campo `Anyo` mediante **Data Blending** de Tableau.
+
+---
+
+### Campos calculados
+- **Clasificacion IPC**: categoriza la inflación en 4 niveles (`Inflación alta/moderada/baja/Deflación`) mediante lógica IF/ELSEIF
+
+---
+
+### Visualizaciones
+
+**Hoja 1 — IPC mensual (2017–2025)**
+Línea temporal con pico histórico del 10,8% en julio 2022.
+![Hoja 1](img/hoja1_ipc.png)
+
+**Hoja 2 — Vivienda nueva vs Segunda mano por CCAA**
+Barras comparativas por tipo de vivienda en 2024.
+![Hoja 2](img/hoja2_ipv.png)
+
+**Hoja 3 — IPV Nacional (2007–2024)**
+Burbuja inmobiliaria, caída del ~40% en la crisis y recuperación posterior.
+![Hoja 3](img/hoja3_ipv.png)
+
+**Hoja 4 — Mapa IPC Nacional (2017–2024)**
+Mapa de IPC desde 2017 hasta 2024.
+![Hoja 4](img/hoja4_ipc.png)
+
+**Dashboard interactivo**
+Las tres hojas combinadas con acciones de filtro cruzado entre gráficos.
+![Dashboard](img/dashboard.png)
+
+---
+
+### Historia
+Narrativa de 4 puntos: burbuja inmobiliaria → pico de inflación 2022 → comparativa vivienda 2024 → visión global.
+![Historia](img/historia.png)
+
+---
+
+### Archivo Tableau
+Disponible en `/tableau/3.2 Jorge_Castillo_Gordillo.twbx`
 
