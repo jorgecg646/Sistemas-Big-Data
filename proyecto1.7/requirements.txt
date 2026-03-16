@@ -6,3 +6,5 @@ requests
 pandas
 numpy
 pyarrow
+scikit-learn
+statsmodels

@@ -172,3 +172,99 @@ Narrativa de 4 puntos: burbuja inmobiliaria → pico de inflación 2022 → comp
 ### Archivo Tableau
 Disponible en `/tableau/3.2 Jorge_Castillo_Gordillo.twbx`
 
+---
+
+## 🤖 Predictive Modeling — IPC → IPV Regression
+
+### Objective
+
+Predict whether an increase in the Consumer Price Index (**IPC**) correlates with an increase in the Housing Price Index (**IPV**) using regression models. This transitions the project from descriptive analysis (*what happened?*) to predictive analysis (*what will happen?*).
+
+### Algorithm Selection Rationale
+
+**Paradigm chosen: Regression** — since both IPC and IPV are continuous numerical variables (annual percentage variations), the problem naturally falls into a regression framework. We want to predict a numerical value (IPV variation) from another numerical value (IPC variation).
+
+We compare **four regression models** to ensure the best possible fit:
+
+| Model | Why included |
+|---|---|
+| **Linear Regression** | Baseline — simplest model, captures linear relationships |
+| **Ridge Regression** | L2 regularisation — prevents overfitting when features are correlated |
+| **Lasso Regression** | L1 regularisation — can zero out irrelevant features, useful for feature selection |
+| **Polynomial (degree 2)** | Captures non-linear (quadratic) relationships between IPC and IPV |
+
+Ridge and Lasso were preferred over more complex models (Random Forest, SVR) because the dataset has **few features** (primarily IPC variation) and **limited observations** (~60-80 quarters). Simple regularised models avoid overfitting while remaining interpretable.
+
+### Feature Engineering
+
+| Transformation | Rationale |
+|---|---|
+| **Quarterly aggregation** | Monthly IPC is averaged into quarterly values to match IPV's quarterly frequency |
+| **StandardScaler** | Zero-mean, unit-variance normalisation. Required for Ridge/Lasso so the regularisation penalty treats all features equally. Also makes coefficients directly comparable across models |
+| **Quarter extraction** | Temporal alignment feature derived from date to enable IPC-IPV cross-join |
+
+### Hyperparameter Tuning
+
+- **Method**: `GridSearchCV` with 5-fold cross-validation
+- **Tuned parameter**: `alpha` (regularisation strength) for Ridge and Lasso
+- **Search space**: `[0.001, 0.01, 0.1, 1.0, 10.0, 100.0]`
+- **Scoring metric**: R² (coefficient of determination)
+
+Higher alpha = stronger regularisation = simpler model (less prone to overfitting but potentially worse fit).
+
+### Validation & Overfitting Analysis
+
+The validation strategy ensures model reliability:
+
+1. **Train/Test Split** (80/20): Held-out test set provides unbiased performance estimate
+2. **5-Fold Cross-Validation**: Reports mean R² ± standard deviation across folds
+3. **Overfitting Detection**: Train R² vs Test R² gap — a gap > 0.2 triggers a warning
+
+**Metrics reported for every model**:
+
+| Metric | What it measures |
+|---|---|
+| **R² (train & test)** | Proportion of variance explained — closer to 1 is better |
+| **RMSE** | Root Mean Squared Error — in same units as IPV (%), penalises large errors |
+| **MAE** | Mean Absolute Error — average error magnitude in % |
+| **CV R² ± std** | Cross-validated R² — most robust performance estimate |
+
+### Three Regression Models
+
+**Model 1 — National Spain**: Single regression at national level. IPC (general) → IPV (general). Provides the baseline relationship between inflation and housing prices.
+
+**Model 2 — By Autonomous Community (CCAA)**: Independent regressions for each of Spain's 17 CCAA. Reveals regional differences — some communities (e.g., Madrid, Cataluña) show stronger IPC-IPV coupling than others.
+
+**Model 3 — By Housing Type**: Separate regressions for general, new-build, and second-hand housing at national level. New-build housing typically shows higher sensitivity to IPC changes.
+
+### Visualisations
+
+| Chart | File | Description |
+|---|---|---|
+| National scatter + regression line | `regresion_general_espana.html` | Scatter plot with best model regression line, coloured by year |
+| CCAA faceted scatter | `regresion_por_ccaa.html` | Top 9 CCAA by R², each with OLS trendline |
+| CCAA R² ranking | `regresion_r2_por_ccaa.html` | Horizontal bar chart ranking all CCAA by R² |
+| Housing type comparison | `regresion_tipo_vivienda.html` | Three regression lines overlaid (general, new, second-hand) |
+
+### Conclusions
+
+1. **IPC-IPV Relationship**: There is a positive correlation between consumer inflation and housing prices — when IPC increases, IPV tends to follow, though the strength varies by region and housing type.
+
+2. **Regional Variation**: CCAA with stronger real estate markets (coastal and metropolitan areas) typically show higher R² values, indicating that housing prices in these regions are more sensitive to general inflation.
+
+3. **Housing Type**: Second-hand housing generally shows higher responsiveness to IPC changes compared to new-build, likely because new-build prices incorporate additional supply-side factors (construction costs, land availability).
+
+4. **Model Performance**: Regularised models (Ridge/Lasso) often match or outperform basic linear regression, demonstrating the value of hyperparameter tuning even in simple regression tasks.
+
+### Execution
+
+```bash
+# Install dependencies
+pip install -r proyecto1.7/requirements.txt
+
+# Run regression analysis (requires CSVs in data_output/)
+python proyecto1.7/regression_analysis.py
+```
+
+Output: 4 interactive HTML charts in `visualizations/`.
+
